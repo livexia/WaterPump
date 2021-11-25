@@ -26,7 +26,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var isRunning: Bool = false
     private var isRandom: Bool = false
 
-    var statusBar: StatusBarController?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -65,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc
     private func refreshInfoMenu() {
         // 刷新时间间隔
-        if let time = StatusBarController.convertTime(time: timeInterval) {
+        if let time = AppDelegate.convertTime(time: timeInterval) {
             menu.item(at: 0)?.title = "时间间隔：\(time)"
         } else {
             menu.item(at: 0)?.title = "时间间隔为空"
@@ -73,7 +72,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // 刷新截止时间
         if let date = nextNotificationDate {
-            menu.item(at: 1)?.title = "下一次提醒：\(StatusBarController.getLocalDate(date: date))"
+            menu.item(at: 1)?.title = "下一次提醒：\(AppDelegate.getLocalDate(date: date))"
         } else {
             menu.item(at: 1)?.title = "没有提醒，请点击开始"
         }
@@ -89,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     menu.item(at: 1)?.title = "没有提醒，请点击开始"
                     menu.item(at: 2)?.isHidden = true
                 }
-            } else if let time = StatusBarController.convertTime(time: time) {
+            } else if let time = AppDelegate.convertTime(time: time) {
                 menu.item(at: 2)?.isHidden = false
                 menu.item(at: 2)?.title = "剩余时间：\(time)"
             } else {
@@ -104,7 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func getTimeIntervalSubMenu() -> NSMenu? {
         let subMenu = NSMenu()
         do {
-            if let title = StatusBarController.convertTime(time: TimeInterval(1)) {
+            if let title = AppDelegate.convertTime(time: TimeInterval(1)) {
                 let newItem = NSMenuItem(title: title,
                                          action: #selector(setTimeInterval),
                                          keyEquivalent: "")
@@ -114,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         do {
-                if let title = StatusBarController.convertTime(time: TimeInterval(60)) {
+            if let title = AppDelegate.convertTime(time: TimeInterval(60)) {
                 let newItem = NSMenuItem(title: title,
                                          action: #selector(setTimeInterval),
                                          keyEquivalent: "")
@@ -125,7 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         for timeInterval in stride(from: 15 * 60, to: 60 * 60, by: 5 * 60) {
             do {
-                if let title = StatusBarController.convertTime(time: TimeInterval(timeInterval)) {
+                if let title = AppDelegate.convertTime(time: TimeInterval(timeInterval)) {
                     let newItem = NSMenuItem(title: title,
                                              action: #selector(setTimeInterval),
                                              keyEquivalent: "")
@@ -218,7 +217,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let content = UNMutableNotificationContent()
                 content.title = "喝点水"
                 content.subtitle = "改变一下姿势吧"
-                if let time = StatusBarController.convertTime(time: self.timeInterval) {
+                if let time = AppDelegate.convertTime(time: self.timeInterval) {
                     content.body = "已经保持现在的状态\(time)了，让眼睛休息一下，喝点水，改变一下姿势和状态吧"
                 }
                 content.sound = UNNotificationSound.default
