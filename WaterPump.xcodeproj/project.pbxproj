@@ -14,7 +14,6 @@
 		3D48D44F274FCAD40018AFD6 /* WaterPumpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D44E274FCAD40018AFD6 /* WaterPumpUITests.swift */; };
 		3D48D451274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D450274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift */; };
 		3D48D464274FCBED0018AFD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D462274FCBED0018AFD6 /* AppDelegate.swift */; };
-		3D48D465274FCBED0018AFD6 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D463274FCBED0018AFD6 /* StatusBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +46,6 @@
 		3D48D450274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterPumpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3D48D461274FCB4F0018AFD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D48D462274FCBED0018AFD6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D48D463274FCBED0018AFD6 /* StatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				3D48D462274FCBED0018AFD6 /* AppDelegate.swift */,
-				3D48D463274FCBED0018AFD6 /* StatusBarController.swift */,
 				3D48D461274FCB4F0018AFD6 /* Info.plist */,
 				3D48D434274FCAD30018AFD6 /* ViewController.swift */,
 				3D48D436274FCAD40018AFD6 /* Assets.xcassets */,
@@ -257,7 +254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D48D464274FCBED0018AFD6 /* AppDelegate.swift in Sources */,
-				3D48D465274FCBED0018AFD6 /* StatusBarController.swift in Sources */,
 				3D48D435274FCAD30018AFD6 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
