@@ -14,7 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var menu: NSMenu!
 
-    private var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: 28.0)
+    private var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: 18.0)
 
     private let un: UNUserNotificationCenter = UNUserNotificationCenter.current()
 
@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
 
         if let statusBarButton = statusItem.button {
-            statusBarButton.image = #imageLiteral(resourceName: "StatusBarIcon")
+            statusBarButton.image = NSImage(systemSymbolName: "stopwatch", accessibilityDescription: nil)
             statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
             statusBarButton.image?.isTemplate = true
         }
