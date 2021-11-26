@@ -14,6 +14,7 @@
 		3D48D44F274FCAD40018AFD6 /* WaterPumpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D44E274FCAD40018AFD6 /* WaterPumpUITests.swift */; };
 		3D48D451274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D450274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift */; };
 		3D48D464274FCBED0018AFD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48D462274FCBED0018AFD6 /* AppDelegate.swift */; };
+		3DF910C32750BD970060D197 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DF910C52750BD970060D197 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		3D48D450274FCAD40018AFD6 /* WaterPumpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterPumpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3D48D461274FCB4F0018AFD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D48D462274FCBED0018AFD6 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3DF910C42750BD970060D197 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DF910C62750BDA20060D197 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,7 @@
 				3D48D438274FCAD40018AFD6 /* Main.storyboard */,
 				3D48D436274FCAD40018AFD6 /* Assets.xcassets */,
 				3D48D43B274FCAD40018AFD6 /* WaterPump.entitlements */,
+				3DF910C52750BD970060D197 /* InfoPlist.strings */,
 			);
 			path = WaterPump;
 			sourceTree = "<group>";
@@ -209,6 +213,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 3D48D426274FCAD30018AFD6;
 			productRefGroup = 3D48D430274FCAD30018AFD6 /* Products */;
@@ -228,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D48D437274FCAD40018AFD6 /* Assets.xcassets in Resources */,
+				3DF910C32750BD970060D197 /* InfoPlist.strings in Resources */,
 				3D48D43A274FCAD40018AFD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +303,15 @@
 				3D48D439274FCAD40018AFD6 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3DF910C52750BD970060D197 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3DF910C42750BD970060D197 /* en */,
+				3DF910C62750BDA20060D197 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

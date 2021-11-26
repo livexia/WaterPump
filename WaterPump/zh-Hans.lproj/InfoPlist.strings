@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  WaterPump
+
+  Created by livexia on 2021/11/26.
+  
+*/
+CFBundleDisplayName = "提水";
