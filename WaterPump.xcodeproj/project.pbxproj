@@ -99,8 +99,8 @@
 				3D48D462274FCBED0018AFD6 /* AppDelegate.swift */,
 				3D48D461274FCB4F0018AFD6 /* Info.plist */,
 				3D48D434274FCAD30018AFD6 /* ViewController.swift */,
-				3D48D436274FCAD40018AFD6 /* Assets.xcassets */,
 				3D48D438274FCAD40018AFD6 /* Main.storyboard */,
+				3D48D436274FCAD40018AFD6 /* Assets.xcassets */,
 				3D48D43B274FCAD40018AFD6 /* WaterPump.entitlements */,
 			);
 			path = WaterPump;

@@ -22,12 +22,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var nextNotificationDate: Date?
     private var remainTime: TimeInterval?
     private var offsetTimeInterval: TimeInterval = 0
-    private var isRepeat: Bool = true
     private var isRunning: Bool = false
     private var isRandom: Bool = false
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // request notification auth
+        self.un.requestAuthorization(options: [.alert, .sound]) { (authorized, error) in
+            if authorized {
+                print("Notification authorized")
+            } else if !authorized {
+                print("Notification not authorized")
+            } else {
+                print(error?.localizedDescription as Any)
+            }
+        }
+        
         // Insert code here to initialize your application
 
         if let statusBarButton = statusItem.button {
@@ -37,6 +47,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         statusItem.menu = menu
+        
+        menu.item(withTag: 5)?.submenu = getTimeIntervalSubMenu()
 
         let timer = Timer.scheduledTimer(timeInterval: 1,
                                          target: self,
@@ -80,14 +92,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 刷新剩余时间
         remainTime = nextNotificationDate?.timeIntervalSinceNow
         if let time = remainTime {
-            if time < 0 {
-                if isRepeat {
-                    sendNotification(self)
-                    remainTime = nextNotificationDate?.timeIntervalSinceNow
-                } else {
-                    menu.item(at: 1)?.title = "没有提醒，请点击开始"
-                    menu.item(at: 2)?.isHidden = true
-                }
+            if time <= 0 && isRunning {
+                // 当剩余时间结束后马上发送提醒，并设置下一次的提醒时间
+                sendNotification(self)
+                nextNotificationDate = getNextNotificationDate()
             } else if let time = AppDelegate.convertTime(time: time) {
                 menu.item(at: 2)?.isHidden = false
                 menu.item(at: 2)?.title = "剩余时间：\(time)"
@@ -102,27 +110,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func getTimeIntervalSubMenu() -> NSMenu? {
         let subMenu = NSMenu()
-        do {
-            if let title = AppDelegate.convertTime(time: TimeInterval(1)) {
-                let newItem = NSMenuItem(title: title,
-                                         action: #selector(setTimeInterval),
-                                         keyEquivalent: "")
-                newItem.tag = 1
-                newItem.target = self
-                subMenu.addItem(newItem)
-            }
-        }
-        do {
-            if let title = AppDelegate.convertTime(time: TimeInterval(60)) {
-                let newItem = NSMenuItem(title: title,
-                                         action: #selector(setTimeInterval),
-                                         keyEquivalent: "")
-                newItem.tag = 60
-                newItem.target = self
-                subMenu.addItem(newItem)
-            }
-        }
-        for timeInterval in stride(from: 15 * 60, to: 60 * 60, by: 5 * 60) {
+        
+        // 临时添加5秒时间间隔，用作测试
+        let timeIntervalArray = [5, ] + stride(from: 15 * 60, to: 60 * 60, by: 5 * 60)
+        for timeInterval in timeIntervalArray {
             do {
                 if let title = AppDelegate.convertTime(time: TimeInterval(timeInterval)) {
                     let newItem = NSMenuItem(title: title,
@@ -137,9 +128,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
-        self.timeInterval = 1500
-        refreshInfoMenu()
-        print("设置默认时间间隔为：\(timeInterval)s")
         return subMenu
     }
 
@@ -149,15 +137,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // 设置随机时间间隔偏移
         timeInterval = TimeInterval(sender.tag) + offsetTimeInterval
 
-        if timeInterval < 60 {
-            isRepeat = false
-        } else {
-            isRepeat = true
-        }
-
         sender.state = .on
         resettingNotification()
-        print("设置时间间隔为：\(timeInterval)s，是否重复：\(isRepeat)")
+        print("设置时间间隔为：\(timeInterval)s")
     }
 
     @IBAction func setRandomTimeInterval(sender: NSMenuItem) {
@@ -183,8 +165,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func resettingNotification() {
         if isRunning {
-            removeNotification()
-            sendNotification(self)
+            // 根据新的时间间隔设置下一次的提醒时间
+            nextNotificationDate = getNextNotificationDate()
         }
         refreshInfoMenu()
     }
@@ -193,24 +175,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if sender.state == .on {
             removeNotification()
         } else {
-            sendNotification(self)
+            isRunning = true
+            // 根据新的时间间隔设置下一次的提醒时间
+            nextNotificationDate = getNextNotificationDate()
         }
-        if isRepeat {
-            sender.state = sender.state == .on ? .off : .on
-        }
+        sender.state = sender.state == .on ? .off : .on
     }
 
     @objc private func sendNotification(_ sender: Any) {
-        // request notification auth
-        self.un.requestAuthorization(options: [.alert, .sound]) { (authorized, error) in
-            if authorized {
-                print("Authorized")
-            } else if !authorized {
-                print("Not authorized")
-            } else {
-                print(error?.localizedDescription as Any)
-            }
-        }
 
         self.un.getNotificationSettings { (settings) in
             if settings.authorizationStatus == .authorized {
@@ -223,15 +195,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 content.sound = UNNotificationSound.default
 
                 let id = "Water Pump"
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: self.timeInterval,
-                                                                repeats: false)
+                
+                // 立即（1s后）发出提醒通知
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
 
                 let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
                 self.un.add(request) { (error) in
                     if error != nil { print(error?.localizedDescription as Any)}
                 }
-                self.nextNotificationDate = trigger.nextTriggerDate()
-                print("增加提醒")
+                print("发送提醒")
                 self.isRunning = true
                 self.refreshInfoMenu()
             }
@@ -248,10 +220,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
             self.isRunning = false
+            self.nextNotificationDate = nil
             print("Remove notifications: \(identifiers)")
 
         }
-        self.nextNotificationDate = nil
         refreshInfoMenu()
     }
 
@@ -270,6 +242,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         formatter.allowedUnits = [.day, .hour, .minute, .second]
 
         return formatter.string(from: time)
+    }
+    
+    private func getNextNotificationDate() -> Date {
+        return .now + timeInterval + 1
     }
 
     @IBAction func showAbout(_ sender: Any) {
